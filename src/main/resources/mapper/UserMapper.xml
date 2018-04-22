@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hlk.dao.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.hlk.pojo.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="stuName" property="stuName" jdbcType="VARCHAR" />
+        <result column="stuAge" property="stuAge" jdbcType="INTEGER" />
+        <result column="stuSex" property="stuSex" jdbcType="VARCHAR" />
+        <result column="stuId" property="stuId" jdbcType="VARCHAR" />
+        <result column="stuTel" property="stuTel" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="stuMajor" property="stuMajor" jdbcType="VARCHAR" />
+        <result column="stuAddr" property="stuAddr" jdbcType="VARCHAR" />
+        <result column="stuJob" property="stuJob" jdbcType="VARCHAR" />
+        <result column="img" property="img" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, user_name, password, stuName, stuAge, stuSex, stuId, stuTel, type, stuMajor,stuJob,img,
+        stuAddr
+    </sql>
+
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.hlk.pojo.User" >
+        insert into user (id, user_name, password,
+        stuName, stuAge, stuSex,
+        stuId, stuTel, type,stuJob,img,
+        stuMajor, stuAddr)
+        values (#{id,jdbcType=INTEGER}, #{user_name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{stuName,jdbcType=VARCHAR}, #{stuAge,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+        #{stuId,jdbcType=VARCHAR}, #{stuTel,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},#{stuJob,jdbcType=VARCHAR},#{img,jdbcType=VARCHAR},
+        #{stuMajor,jdbcType=VARCHAR}, #{stuAddr,jdbcType=VARCHAR})
+    </insert>
+
+
+
+    <update id="updateUser" parameterType="com.hlk.pojo.User" >
+        update user
+        <set >
+            <if test="user_name != null" >
+                user_name = #{user_name,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null" >
+                img = #{img,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="stuJob != null" >
+                stuJob = #{stuJob,jdbcType=VARCHAR},
+            </if>
+            <if test="stuName != null" >
+                stuName = #{stuName,jdbcType=VARCHAR},
+            </if>
+            <if test="stuAge != null" >
+                stuAge = #{stuAge,jdbcType=INTEGER},
+            </if>
+            <if test="stuSex != null" >
+                stuSex = #{stuSex,jdbcType=VARCHAR},
+            </if>
+            <if test="stuId != null" >
+                stuId = #{stuId,jdbcType=VARCHAR},
+            </if>
+            <if test="stuTel != null" >
+                stuTel = #{stuTel,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="stuMajor != null" >
+                stuMajor = #{stuMajor,jdbcType=VARCHAR},
+            </if>
+            <if test="stuAddr != null" >
+                stuAddr = #{stuAddr,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="getUserNum" resultType="int" parameterType="string">
+        <![CDATA[
+       SELECT count(*) FROM user WHERE stuJob not in('学生')
+      ]]>
+    </select>
+
+    <select id="getStuList"  resultMap="BaseResultMap">
+        <![CDATA[
+          select * from user WHERE stuJob not in('学生')
+        ]]>
+    </select>
+    <select id="getAllStudent"  resultMap="BaseResultMap">
+        <![CDATA[
+          select * from user
+        ]]>
+    </select>
+
+
+    <select id="getUserByUserName" resultType="com.hlk.pojo.User" parameterType="string">
+      <![CDATA[
+        SELECT * FROM user WHERE user_name=#{user_name}
+      ]]>
+    </select>
+</mapper>

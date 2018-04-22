@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hlk.dao.LeaveMapper" >
+  <resultMap id="BaseResultMap" type="com.hlk.pojo.Leave" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stuname" property="stuname" jdbcType="VARCHAR" />
+    <result column="stuid" property="stuid" jdbcType="VARCHAR" />
+    <result column="stureson" property="stureson" jdbcType="VARCHAR" />
+    <result column="sturaddr" property="sturaddr" jdbcType="VARCHAR" />
+    <result column="stutel" property="stutel" jdbcType="VARCHAR" />
+    <result column="stuparetel" property="stuparetel" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="VARCHAR" />
+    <result column="returntel" property="returntel" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, stuname, stuid, stureson, sturaddr, stutel, stuparetel, starttime, returntel
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `leave`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `leave`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.hlk.pojo.Leave" >
+    insert into `leave` (id, stuname, stuid,
+      stureson, sturaddr, stutel, 
+      stuparetel, starttime, returntel
+      )
+    values (#{id,jdbcType=INTEGER}, #{stuname,jdbcType=VARCHAR}, #{stuid,jdbcType=VARCHAR}, 
+      #{stureson,jdbcType=VARCHAR}, #{sturaddr,jdbcType=VARCHAR}, #{stutel,jdbcType=VARCHAR}, 
+      #{stuparetel,jdbcType=VARCHAR}, #{starttime,jdbcType=VARCHAR}, #{returntel,jdbcType=VARCHAR}
+      )
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hlk.pojo.Leave" >
+    update `leave`
+    <set >
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stuid != null" >
+        stuid = #{stuid,jdbcType=VARCHAR},
+      </if>
+      <if test="stureson != null" >
+        stureson = #{stureson,jdbcType=VARCHAR},
+      </if>
+      <if test="sturaddr != null" >
+        sturaddr = #{sturaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel != null" >
+        stutel = #{stutel,jdbcType=VARCHAR},
+      </if>
+      <if test="stuparetel != null" >
+        stuparetel = #{stuparetel,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="returntel != null" >
+        returntel = #{returntel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
