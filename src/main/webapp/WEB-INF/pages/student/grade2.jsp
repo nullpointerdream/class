@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -27,16 +28,19 @@
 		<!--表格-->
 		<div class="col-md-9">
 				<table id="grid-data" class="table table-condensed table-hover table-striped">
-					<a class="btn btn-primary" href="#" id="add">新增</a>
-					<a class="btn btn-success" href="<%=basePath%>/user/exportStu">导出excel</a>
+					<a class="btn btn-success" href="<%=basePath%>/stu/exportGrade">导出excel</a>
 					<thead>
 					<tr>
-						<th data-column-id="stuId"  data-identifier="true" data-type="numeric">学号</th>
-						<th data-column-id="stuName">姓名</th>
-						<th data-column-id="stuSex">性别</th>
-						<th data-column-id="stuTel">联系方式</th>
-						<th data-column-id="stuJob" data-order="desc">职位</th>
-						<th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+						<th data-column-id="stuid"  data-identifier="true" data-type="numeric">学号</th>
+						<th data-column-id="stuname">姓名</th>
+						<th data-column-id="course1">数据结构</th>
+						<th data-column-id="course2">操作系统</th>
+						<th data-column-id="course3">软件工程</th>
+						<th data-column-id="course4">计算机组成原理</th>
+						<th data-column-id="course5">计算机网络</th>
+						<th data-column-id="course6">java</th>
+						<th data-column-id="avg">平均</th>
+
 					</tr>
 					</thead>
 				</table>
@@ -52,34 +56,44 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">修改学生信息</h4>
+				<h4 class="modal-title">修改学生成绩</h4>
 			</div>
 			<form method="post" id="upform">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="stuId2">学号</label>
-						<input type="text" name="stuId" class="form-control" id="stuId2" >
+						<label for="stuid1">学号</label>
+						<input type="text" name="stuid" class="form-control" id="stuid1" readonly>
 					</div>
 					<div class="form-group">
-						<label for="stuName2">姓名</label>
-						<input type="text" name="stuName" class="form-control" id="stuName2">
+						<label for="stuname1">姓名</label>
+						<input type="text" name="stuname" class="form-control" id="stuname1" readonly>
 					</div>
 					<div class="form-group">
-						<label for="stuTel2">联系方式</label>
-						<input type="text" name="stuTel" class="form-control" id="stuTel2">
+					<label for="course11">数据结构</label>
+					<input type="text" name="course1" class="form-control" id="course11">
+				</div>
+					<div class="form-group">
+						<label for="course21">操作系统</label>
+						<input type="text" name="course2" class="form-control" id="course21">
 					</div>
 					<div class="form-group">
-						<label for="stuJob2">职位</label>
-						<select class="form-control bbb" name="stuJob" id="stuJob2" >
-							<option value="学生">学生</option>
-							<option value="班长">班长</option>
-							<option value="学习委员">学习委员</option>
-							<option value="团支书">团支书</option>
-							<option value="生活委员">生活委员</option>
+						<label for="course31">软件工程</label>
+						<input type="text" name="course3" class="form-control" id="course31">
+					</div>
+					<div class="form-group">
+						<label for="course41">计算机组成原理</label>
+						<input type="text" name="course4" class="form-control" id="course41">
+					</div>
+					<div class="form-group">
+						<label for="course51">计算机网络</label>
+						<input type="text" name="course5" class="form-control" id="course51">
+					</div>
+					<div class="form-group">
+						<label for="course61">java</label>
+						<input type="text" name="course6" class="form-control" id="course61">
+						<input type="hidden" name="id" class="form-control" id="id1">
+					</div>
 
-						</select>
-						<input type="hidden" name="id" class="form-control" id="id2">
-					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" id="updateClose" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -95,44 +109,46 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">添加学生</h4>
+				<h4 class="modal-title">添加学生成绩</h4>
 			</div>
 			<form  method="post" id="addForm">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="stuName1">学生姓名</label>
-						<input type="text" name="stuName" class="form-control" id="stuName1">
-					</div>
-					<div class="form-group">
-						<label for="stuId1">学号</label>
-						<input type="text" name="stuId" class="form-control" id="stuId1">
-					</div>
-					<div class="form-group">
-						<label for="username">学生账号</label>
-						<input type="text" name="username" class="form-control" id="username">
-					</div>
-					<div class="form-group">
-						<label for="password">学生密码</label>
-						<input type="password" name="password" class="form-control" id="password">
-					</div>
-					<div class="form-group">
-						<label for="stuMajor1">专业</label>
-						<input type="text" name="stuMajor" class="form-control" id="stuMajor1">
-					</div>
-					<div class="form-group">
-						<label for="stuTel1">联系方式</label>
-						<input type="text" name="stuTel" class="form-control" id="stuTel1">
-					</div>
-					<div class="form-group">
-						<label for="stuJob1">职位</label>
-						<select class="form-control bbb" name="stuJob" id="stuJob1" >
-							<option value="学生">学生</option>
-							<option value="班长">班长</option>
-							<option value="学习委员">学习委员</option>
-							<option value="团支书">团支书</option>
-							<option value="生活委员">生活委员</option>
+						<label for="stuName2">学生姓名</label>
+						<select name="stuname" class="form-control" id="stuName2">
+							 <c:forEach items="${userlist}" var="user">
+								 <option value="${user.stuId}@${user.stuName}">${user.stuName}</option>
+
+							 </c:forEach>
+
 
 						</select>
+					</div>
+
+
+					<div class="form-group">
+						<label for="course12">数据结构</label>
+						<input type="text" name="course1" class="form-control" id="course12">
+					</div>
+					<div class="form-group">
+						<label for="course22">操作系统</label>
+						<input type="text" name="course2" class="form-control" id="course22">
+					</div>
+					<div class="form-group">
+						<label for="course32">软件工程</label>
+						<input type="text" name="course3" class="form-control" id="course32">
+					</div>
+					<div class="form-group">
+						<label for="course42">计算机组成原理</label>
+						<input type="text" name="course4" class="form-control" id="course42">
+					</div>
+					<div class="form-group">
+						<label for="course52">计算机网络</label>
+						<input type="text" name="course5" class="form-control" id="course52">
+					</div>
+					<div class="form-group">
+						<label for="course62">java</label>
+						<input type="text" name="course6" class="form-control" id="course62">
 					</div>
 
 				</div>
@@ -158,25 +174,24 @@
                     id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
                 };
             },
-            url:"<%=basePath%>/user/allStudent",
-            formatters: {
-                "commands": function(column, row)
-                {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\">编辑<span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\">删除<span class=\"fa fa-trash-o\"></span></button>";
-                }
-            }
+            url:"<%=basePath%>/stu/gradelist"
         }).on("loaded.rs.jquery.bootgrid", function()
         {
             grid.find(".command-edit").on("click", function(e)
             {
                 $(".stumodal").modal();
-                $.post("<%=basePath%>/user/getStuInfo",{stuId:$(this).data("row-id")},function(str){
-                    $("#stuId2").val(str.stuId);
-                    $("#stuName2").val(str.stuName);
-                    $("#stuTel2").val(str.stuTel);
-                    $("#stuJob2").val(str.stuJob);
-                    $("#id2").val(str.id);
+                $.post("<%=basePath%>/stu/getGradeInfo",{stuId:$(this).data("row-id")},function(str){
+                    $("#stuid1").val(str.stuid);
+                    $("#stuname1").val(str.stuname);
+                    $("#course11").val(str.course1);
+                    $("#course21").val(str.course2);
+                    $("#course31").val(str.course3);
+                    $("#course41").val(str.course4);
+                    $("#course51").val(str.course5);
+                    $("#course61").val(str.course6);
+                    $("#id1").val(str.id);
+
+
                 });
             }).end().find(".command-delete").on("click", function(e)
             {
@@ -200,7 +215,7 @@
     $("#updateStu").click(function(){
         $.ajax({
             type: "post",
-            url: "<%=basePath%>/user/updateStu",
+            url: "<%=basePath%>/stu/updateGrade",
             data: $("#upform").serialize(),
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
             success: function(data){
@@ -219,7 +234,7 @@
     $("#addStu").click(function(){
         $.ajax({
             type: "post",
-            url: "<%=basePath%>/user/addStu",
+            url: "<%=basePath%>/stu/addGrade",
             data: $("#addForm").serialize(),
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
             success: function(data){

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -30,4 +31,10 @@ public interface UserService {
     User updateUserById(User user);
 
     void deleteById(int stuId);
+
+    int getAllStudentCount();
+
+    InputStream getInputStream() throws Exception;
+
+    List<User> getAllStudentWithOut();
 }

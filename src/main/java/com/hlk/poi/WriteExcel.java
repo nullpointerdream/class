@@ -57,9 +57,12 @@ public class WriteExcel {
             for(int j=0; j<obj.length; j++){
                 HSSFCell  cell = null;   //设置单元格的数据类型
                 cell = row.createCell(j,HSSFCell.CELL_TYPE_STRING);
-                if(!"".equals(obj[j]) && obj[j] != null){
-                    cell.setCellValue(obj[j].toString());						//设置单元格的值
+                try{
+                    cell.setCellValue(obj[j].toString());
+                }catch (Exception e){
+                    cell.setCellValue("");
                 }
+             			//设置单元格的值
                 cell.setCellStyle(style);									//设置单元格样式
             }
         }

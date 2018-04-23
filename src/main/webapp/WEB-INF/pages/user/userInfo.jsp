@@ -70,11 +70,11 @@
 						<div class="form-group">
 							<label>职位：</label>
 							<select class="form-control bbb" name="stuJob" value="${ sessionScope.user.stuJob }" >
-								<option value="学生">学生</option>
-								<option value="班长">班长</option>
-								<option value="学习委员">学习委员</option>
-								<option value="团支书">团支书</option>
-								<option value="生活委员">生活委员</option>
+								<option value="学生"  <c:if test="${'学生' eq sessionScope.user.stuJob}">selected</c:if>>学生</option>
+								<option value="班长" <c:if test="${'班长' eq sessionScope.user.stuJob}">selected</c:if>>班长</option>
+								<option value="学习委员"  <c:if test="${'学习委员' eq sessionScope.user.stuJob}">selected</c:if>>学习委员</option>
+								<option value="团支书" <c:if test="${'团支书' eq sessionScope.user.stuJob}">selected</c:if>>团支书</option>
+								<option value="生活委员" <c:if test="${'生活委员' eq sessionScope.user.stuJob}">selected</c:if>>生活委员</option>
 
 							</select>
 
@@ -82,8 +82,8 @@
 						<div class="form-group">
 							<label>性别：</label>
 							<select class="form-control bbb" name="stuSex" value="${ sessionScope.user.stuSex }" >
-								<option value="男">男</option>
-								<option value="女">女</option>
+								<option value="男" <c:if test="${'男' eq sessionScope.user.stuSex}">selected</c:if>>男</option>
+								<option value="女" <c:if test="${'女' eq sessionScope.user.stuSex}">selected</c:if>>女</option>
 
 
 							</select>

@@ -100,7 +100,7 @@
 
             </td>
             <td>
-                <a href="/user/register" class="btn btn-danger btn-sm " > 注册</a>
+                <a href="<%=basePath%>/user/register" class="btn btn-danger btn-sm " > 注册</a>
                 <button id="submit" type="button" class="btn btn-sm btn-success">登录</button>
             </td>
 

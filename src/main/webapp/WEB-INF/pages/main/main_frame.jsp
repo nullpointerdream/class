@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -13,7 +14,7 @@
 
     <script src="<%=basePath%>/js/jquery-1.12.3.min.js"></script>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/jquery.bootgrid.min.css">
+    <link rel="stylesheet" href="<%=basePath%>/css/jquery.bootgrid.min.css">
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="<%=basePath%>/js/jquery.bootgrid.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>/js/bootstrap-datetimepicker.min.js"></script>
@@ -48,7 +49,7 @@
     <div class="row">
         <div class="col-md-12" style="    background-color: #63B8FF;">
             <h1><font   color="#fff;" >班级管理</font></h1>
-            <h5><a href="/user/logout">logout</a></h5>
+            <h5><a href="<%=basePath%>/user/logout">logout</a></h5>
         </div>
 
 
@@ -68,8 +69,9 @@
                             <!--二级菜单-->
                             <ul  id="content" class="nav nav-list collapse list-group">
                                 <li  ><a style=" color: #fff;" href="#" onclick="guanli();">&nbsp;&nbsp;&nbsp;&nbsp;班级基本信息</a></li>
-                                <li  ><a style=" color: #fff;" href="#">&nbsp;&nbsp;&nbsp;&nbsp;班级文件</a></li>
+                                <li  ><a style=" color: #fff;" href="#" onclick="banji();">&nbsp;&nbsp;&nbsp;&nbsp;班级消息文件</a></li>
                                 <li  ><a style=" color: #fff;" href="#" onclick="leave();">&nbsp;&nbsp;&nbsp;&nbsp;我要离校</a></li>
+                                <li  ><a style=" color: #fff;" href="#" onclick="banfeilist2();">&nbsp;&nbsp;&nbsp;&nbsp;班费支出</a></li>
                             </ul>
                         </li>
                         <!--一级菜单-->
@@ -81,10 +83,22 @@
                             <!--二级菜单-->
                             <ul    id="content2" class="nav nav-list collapse ">
                                 <li ><a style=" color: #fff;" href="#" onclick="geren();">&nbsp;&nbsp;&nbsp;&nbsp;个人基本信息</a></li>
-                                <li><a style=" color: #fff;" href="#">&nbsp;&nbsp;&nbsp;&nbsp;成绩</a></li>
+                                <li><a style=" color: #fff;" href="#" onclick="mychengji();">&nbsp;&nbsp;&nbsp;&nbsp;成绩</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a style=" color: #fff;" class="collapsed " data-toggle="collapse" data-target="#content4">
+                                财务收支中心
+                                <span class="pull-right glyphicon  glyphicon-chevron-down"></span>
+                            </a>
+                            <!--二级菜单-->
+                            <ul    id="content4" class="nav nav-list collapse ">
+                                <li ><a style=" color: #fff;" href="#" onclick="jiaofei();">&nbsp;&nbsp;&nbsp;&nbsp;我要缴费</a></li>
+                                <li  ><a style=" color: #fff;" href="#" onclick="banfeilist2();">&nbsp;&nbsp;&nbsp;&nbsp;班费支出</a></li>
 
+                            </ul>
+                        </li>
+<c:if test="${ sessionScope.user.stuJob=='班长' }">
                         <li>
                             <a style=" color: #fff;" class="collapsed " data-toggle="collapse" data-target="#content3">
                                后台管理
@@ -93,15 +107,25 @@
                             <!--二级菜单-->
                             <ul    id="content3" class="nav nav-list collapse ">
                                 <li ><a style=" color: #fff;" href="#" onclick="student();">&nbsp;&nbsp;&nbsp;&nbsp;学生信息</a></li>
-                                <li><a style=" color: #fff;" href="#">&nbsp;&nbsp;&nbsp;&nbsp;成绩</a></li>
+                                <li><a style=" color: #fff;" href="#" onclick="chengji();">&nbsp;&nbsp;&nbsp;&nbsp;成绩</a></li>
+                                <li ><a style=" color: #fff;" href="#" onclick="shiwu();">&nbsp;&nbsp;&nbsp;&nbsp;班级事务中心</a></li>
+                                <li ><a style=" color: #fff;" href="#" onclick="lixiao();">&nbsp;&nbsp;&nbsp;&nbsp;离校信息</a></li>
+                                <li ><a style=" color: #fff;" href="#" onclick="jiaofeilist();">&nbsp;&nbsp;&nbsp;&nbsp;缴费信息</a></li>
+                                <li ><a style=" color: #fff;" href="#" onclick="banfeilist();">&nbsp;&nbsp;&nbsp;&nbsp;班费支出</a></li>
                             </ul>
+
                         </li>
+</c:if>
                     </ul>
                 </div>
 
+
                 <!-- 右侧内容 -->
                 <div class="main_content"></div>
-
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <script type="text/javascript">
@@ -110,13 +134,13 @@
             /*切换折叠指示图标*/
             $(this).find("span").toggleClass("glyphicon-chevron-down");
             $(this).find("span").toggleClass("glyphicon-chevron-up");
+
+
         });
     });
 
 
-    $(".collapsed").click(function(){
-        $(".collapsed").prop("aria-expanded","false");
-    });
+
 
     function guanli(){
        // $(".main_content").load("/stu/student/stuList");
@@ -131,8 +155,32 @@
     function student(){
         $(".main_content").load("<%=basePath%>/user/user/allStudent");
     };
-
-
-
+    function shiwu(){
+        $(".main_content").load("<%=basePath%>/stu/student/shiwu");
+    };
+    function banji(){
+        $(".main_content").load("<%=basePath%>/user/user/shiwu");
+    };
+    function lixiao(){
+        $(".main_content").load("<%=basePath%>/stu/student/leavelist");
+    };
+    function chengji(){
+        $(".main_content").load("<%=basePath%>/stu/student/grade");
+    };
+    function mychengji(){
+        $(".main_content").load("<%=basePath%>/stu/student/grade2");
+    };
+    function jiaofei(){
+        $(".main_content").load("<%=basePath%>/user/user/money");
+    };
+    function jiaofeilist(){
+        $(".main_content").load("<%=basePath%>/stu/student/money");
+    };
+    function banfeilist(){
+        $(".main_content").load("<%=basePath%>/stu/student/banfei");
+    };
+    function banfeilist2(){
+        $(".main_content").load("<%=basePath%>/stu/student/banfei2");
+    };
 </script>
 </html>

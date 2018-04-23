@@ -71,4 +71,18 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
+
+  <select id="getLeaveNum" resultType="int" >
+    <![CDATA[
+       SELECT count(*) FROM `leave`
+      ]]>
+  </select>
+
+  <select id="getPageLeave"  resultMap="BaseResultMap">
+    <![CDATA[
+          select * from `leave`
+        ]]>
+  </select>
+
 </mapper>

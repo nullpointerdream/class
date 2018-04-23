@@ -27,15 +27,11 @@
 		<!--表格-->
 		<div class="col-md-9">
 				<table id="grid-data" class="table table-condensed table-hover table-striped">
-					<a class="btn btn-primary" href="#" id="add">新增</a>
-					<a class="btn btn-success" href="<%=basePath%>/user/exportStu">导出excel</a>
 					<thead>
 					<tr>
-						<th data-column-id="stuId"  data-identifier="true" data-type="numeric">学号</th>
-						<th data-column-id="stuName">姓名</th>
-						<th data-column-id="stuSex">性别</th>
-						<th data-column-id="stuTel">联系方式</th>
-						<th data-column-id="stuJob" data-order="desc">职位</th>
+						<th data-column-id="id"  data-identifier="true" data-type="numeric">id</th>
+						<th data-column-id="title">标题</th>
+						<th data-column-id="file">文件名</th>
 						<th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
 					</tr>
 					</thead>
@@ -52,39 +48,29 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">修改学生信息</h4>
+				<h4 class="modal-title">查看详情信息</h4>
 			</div>
 			<form method="post" id="upform">
 				<div class="modal-body">
-					<div class="form-group">
-						<label for="stuId2">学号</label>
-						<input type="text" name="stuId" class="form-control" id="stuId2" >
-					</div>
-					<div class="form-group">
-						<label for="stuName2">姓名</label>
-						<input type="text" name="stuName" class="form-control" id="stuName2">
-					</div>
-					<div class="form-group">
-						<label for="stuTel2">联系方式</label>
-						<input type="text" name="stuTel" class="form-control" id="stuTel2">
-					</div>
-					<div class="form-group">
-						<label for="stuJob2">职位</label>
-						<select class="form-control bbb" name="stuJob" id="stuJob2" >
-							<option value="学生">学生</option>
-							<option value="班长">班长</option>
-							<option value="学习委员">学习委员</option>
-							<option value="团支书">团支书</option>
-							<option value="生活委员">生活委员</option>
 
-						</select>
-						<input type="hidden" name="id" class="form-control" id="id2">
+					<div class="form-group">
+						<label for="title4">标题</label>
+						<input type="text" name="title" class="form-control" id="title4" />
 					</div>
-				</div>
+
+
+					<div class="form-group">
+						<label for="title2">内容</label>
+						<textarea type="text" name="title" class="form-control" id="title2" ></textarea>
+					</div>
+
+
+					</div>
+
 				<div class="modal-footer">
 					<button type="button" id="updateClose" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button  id="updateStu" type="button"  class="btn btn-primary">修改</button>
 				</div>
+
 			</form>
 		</div>
 	</div>
@@ -95,45 +81,23 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">添加学生</h4>
+				<h4 class="modal-title">添加信息</h4>
 			</div>
 			<form  method="post" id="addForm">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="stuName1">学生姓名</label>
-						<input type="text" name="stuName" class="form-control" id="stuName1">
+						<label for="title1">标题</label>
+						<input type="text" name="title" class="form-control" id="title1">
 					</div>
 					<div class="form-group">
-						<label for="stuId1">学号</label>
-						<input type="text" name="stuId" class="form-control" id="stuId1">
+						<label for="content1">内容</label>
+						<textarea name="content" class="form-control" id="content1"></textarea>
 					</div>
 					<div class="form-group">
-						<label for="username">学生账号</label>
-						<input type="text" name="username" class="form-control" id="username">
+						<input type="file" name="file" id="upload" style="display:none;"/>
+						<button type="button" id="select" class="btn btn-primary">选择文件</button>
 					</div>
-					<div class="form-group">
-						<label for="password">学生密码</label>
-						<input type="password" name="password" class="form-control" id="password">
-					</div>
-					<div class="form-group">
-						<label for="stuMajor1">专业</label>
-						<input type="text" name="stuMajor" class="form-control" id="stuMajor1">
-					</div>
-					<div class="form-group">
-						<label for="stuTel1">联系方式</label>
-						<input type="text" name="stuTel" class="form-control" id="stuTel1">
-					</div>
-					<div class="form-group">
-						<label for="stuJob1">职位</label>
-						<select class="form-control bbb" name="stuJob" id="stuJob1" >
-							<option value="学生">学生</option>
-							<option value="班长">班长</option>
-							<option value="学习委员">学习委员</option>
-							<option value="团支书">团支书</option>
-							<option value="生活委员">生活委员</option>
 
-						</select>
-					</div>
 
 				</div>
 				<div class="modal-footer">
@@ -158,12 +122,12 @@
                     id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
                 };
             },
-            url:"<%=basePath%>/user/allStudent",
+            url:"<%=basePath%>/stu/shiwu",
             formatters: {
                 "commands": function(column, row)
                 {
-                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\">编辑<span class=\"fa fa-pencil\"></span></button> " +
-                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\">删除<span class=\"fa fa-trash-o\"></span></button>";
+                    return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\">查看详情<span class=\"fa fa-pencil\"></span></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.file + "\">下载文件<span class=\"fa fa-trash-o\"></span></button>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function()
@@ -171,20 +135,26 @@
             grid.find(".command-edit").on("click", function(e)
             {
                 $(".stumodal").modal();
-                $.post("<%=basePath%>/user/getStuInfo",{stuId:$(this).data("row-id")},function(str){
-                    $("#stuId2").val(str.stuId);
-                    $("#stuName2").val(str.stuName);
-                    $("#stuTel2").val(str.stuTel);
-                    $("#stuJob2").val(str.stuJob);
+                $.post("<%=basePath%>/stu/getShiWuInfo",{stuId:$(this).data("row-id")},function(str){
+                    $("#title2").val(str.content);
+                    $("#title4").val(str.title);
                     $("#id2").val(str.id);
                 });
             }).end().find(".command-delete").on("click", function(e)
             {
-
-                $.post("<%=basePath%>/user/delStu",{stuId:$(this).data("row-id")},function(){
+                if($(this).data("row-id")==""||$(this).data("row-id")=="undefined"){
+                    alert("暂无文件");
+                    return false;
+				}
+                window.location.href="<%=basePath%>/stu/downfile?url="+$(this).data("row-id");
+            }).end().find(".command-delete2").on("click", function(e)
+            {
+                $.get("<%=basePath%>/stu/delStu",{stuId:$(this).data("row-id")},function(str){
                     alert("删除成功");
                     $("#grid-data").bootgrid("reload");
+
                 });
+
             });
         });
     });
@@ -215,12 +185,20 @@
         });
     });
 
+    $("#select").click(function(){
+        $("#upload").trigger("click");
+
+    });
 
     $("#addStu").click(function(){
+        var formData = new FormData($( "#addForm" )[0]);  // 要求使用的html对象
         $.ajax({
             type: "post",
-            url: "<%=basePath%>/user/addStu",
-            data: $("#addForm").serialize(),
+            url: "<%=basePath%>/stu/addShiWu",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
             dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
             success: function(data){
                 alert("添加成功");

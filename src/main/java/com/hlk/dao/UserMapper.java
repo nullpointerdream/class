@@ -23,4 +23,8 @@ public interface UserMapper {
     User getUserById(int stuId);
 
     void deleteById(int stuId);
+
+    int getAllStudentCount();
+
+    List<User> getAllStudentWithOut();
 }

@@ -99,11 +99,26 @@
       ]]>
     </select>
 
+
+    <select id="getAllStudentCount" resultType="int" >
+        <![CDATA[
+       SELECT count(*) FROM user
+      ]]>
+    </select>
+
     <select id="getStuList"  resultMap="BaseResultMap">
         <![CDATA[
           select * from user WHERE stuJob not in('学生')
         ]]>
     </select>
+
+    <select id="getAllStudentWithOut"  resultMap="BaseResultMap">
+        <![CDATA[
+          select * from user WHERE stuId not in (SELECT stuid from grade)
+        ]]>
+    </select>
+
+
     <select id="getAllStudent"  resultMap="BaseResultMap">
         <![CDATA[
           select * from user

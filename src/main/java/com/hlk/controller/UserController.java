@@ -1,19 +1,21 @@
 package com.hlk.controller;
 
-import com.hlk.pojo.Leave;
-import com.hlk.pojo.Stu;
-import com.hlk.pojo.StuGrid;
-import com.hlk.pojo.User;
+import com.hlk.pojo.*;
 import com.hlk.service.LeaveService;
+import com.hlk.service.MoneyService;
 import com.hlk.service.UserService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,8 @@ public class UserController {
     private UserService userService;
     @Resource
     private LeaveService leaveService;
-
+    @Resource
+    private MoneyService moneyService;
     @RequestMapping(value = "/")
     public String index() {
         return "index";
@@ -58,13 +61,14 @@ public class UserController {
         return login();
     }
     @RequestMapping(value = "/addStu",method = RequestMethod.POST)
-    public String addStu(@ModelAttribute("user") User user) {
+    @ResponseBody
+    public User addStu(@ModelAttribute("user") User user) {
         userService.addUser(user);
-        return login();
+        return user;
     }
 
     @RequestMapping(value = "/submitLeave",method = RequestMethod.POST)
-    public String insertUser(@ModelAttribute("leave") Leave leave) {
+    public String submitLeave(@ModelAttribute("leave") Leave leave) {
         leaveService.insert(leave);
         return list();
     }
@@ -85,7 +89,7 @@ public class UserController {
     @RequestMapping(value = "/allStudent",produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public StuGrid allStudent(@RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
-        int total = userService.getUserNum();
+        int total = userService.getAllStudentCount();
         List<User> list = userService.getAllStudent(current,rowCount);
         StuGrid stuGrid = new StuGrid();
         stuGrid.setCurrent(current);
@@ -155,11 +159,25 @@ public class UserController {
         return "user/userInfo";
     }
 
+
+    @RequestMapping(value = "/user/money",method = RequestMethod.GET)
+    public String addMoneyUI() {
+        return "user/addMoney";
+    }
+
+    @RequestMapping(value = "/addMoney",method = RequestMethod.GET)
+    public String addMoney(@ModelAttribute("user") Money money) {
+        moneyService.insert(money);
+        return list();
+    }
+
+
     @RequestMapping(value = "/loginValidate",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Map<String,Object> loginValidate(@RequestParam("username") String username,@RequestParam("password") String password,HttpSession httpSession) {
         Map<String,Object> map = new HashMap<String, Object>();
-        if(username==null || password==null) {
+        System.out.println(username);
+        if(username.equals("")) {
             map.put("code", 201);
             map.put("msg", "不能为空");
         }else {
@@ -185,5 +203,16 @@ public class UserController {
         httpSession.removeAttribute("username");
         return "redirect:/user/login";
     }
-
+    @RequestMapping("/exportStu")
+    public void export(HttpServletResponse response) throws Exception{
+        InputStream is=userService.getInputStream();
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("contentDisposition", "attachment;filename=AllUsers.xls");
+        ServletOutputStream output = response.getOutputStream();
+        IOUtils.copy(is,output);
+    }
+    @RequestMapping(value = "/user/shiwu",method = RequestMethod.GET)
+    public String shiwu() {
+        return "/user/shiwuList";
+    }
 }

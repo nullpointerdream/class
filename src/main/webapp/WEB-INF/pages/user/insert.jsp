@@ -60,19 +60,19 @@
             <tr>
                 <td>账号</td>
                 <td>
-                    <div><input type="text" name="user_name"><input type="hidden" name="type" value="1"></div>
+                    <div><input type="text" name="user_name"><input type="hidden" name="type" required></div>
                 </td>
             </tr>
             <tr>
                 <td>密码</td>
                 <td>
-                    <div><input type="password" name="password" ></div>
+                    <div><input type="password" name="password" required></div>
                 </td>
             </tr>
             <tr>
                 <td>姓名</td>
                 <td>
-                    <div><input type="text" name="stuName"></div>
+                    <div><input type="text" name="stuName" required></div>
                 </td>
             </tr>
             <tr>
@@ -84,25 +84,25 @@
             <tr>
                 <td>学号</td>
                 <td>
-                    <div><input type="text" name="stuId"></div>
+                    <div><input type="text" name="stuId" required></div>
                 </td>
             </tr>
             <tr>
                 <td>专业名称</td>
                 <td>
-                    <div><input type="text" name="stuMajor"></div>
+                    <div><input type="text" name="stuMajor" required></div>
                 </td>
             </tr>
             <tr>
                 <td>籍贯</td>
                 <td>
-                    <div><input type="text" name="stuAddr"></div>
+                    <div><input type="text" name="stuAddr" required></div>
                 </td>
             </tr>
             <tr>
                 <td>联系号码（或短号）</td>
                 <td>
-                    <div><input type="text" name="stuTel"></div>
+                    <div><input type="text" name="stuTel" required></div>
                 </td>
             </tr>
 

@@ -2,6 +2,8 @@ package com.hlk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.hlk.dao.UserMapper;
+import com.hlk.poi.WriteExcel;
+import com.hlk.pojo.Stu;
 import com.hlk.pojo.User;
 import com.hlk.service.UserService;
 import com.hlk.util.CommonResource;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,6 +85,33 @@ public class UserServiceImpl implements UserService {
 
     public void deleteById(int stuId) {
         userMapper.deleteById(stuId);
+    }
+
+    public int getAllStudentCount() {
+            return userMapper.getAllStudentCount();
+    }
+
+    public InputStream getInputStream() throws Exception {
+        String[] title=new String[]{"学号","姓名","性别","联系方式","职位"};
+        List<User> plist=userMapper.getAllStudent();
+        List<Object[]>  dataList = new ArrayList<Object[]>();
+        for(int i=0;i<plist.size();i++){
+            Object[] obj=new Object[5];
+            obj[0]=plist.get(i).getStuId();
+            obj[1]=plist.get(i).getStuName();
+            obj[2]=plist.get(i).getStuSex();
+            obj[3]=plist.get(i).getStuTel();
+            obj[4]=plist.get(i).getStuJob();
+            dataList.add(obj);
+        }
+        WriteExcel ex = new WriteExcel(title, dataList);
+        InputStream in;
+        in = ex.export();
+        return in;
+    }
+
+    public List<User> getAllStudentWithOut() {
+        return userMapper.getAllStudentWithOut();
     }
 
     public void addUser(User user) {
